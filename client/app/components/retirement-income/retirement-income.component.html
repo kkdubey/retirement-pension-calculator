@@ -3,8 +3,52 @@
 <app-toast [message]="toast.message"></app-toast>
 
 <div class="card mb-3" *ngIf="!isLoading">
-  <h4 class="card-header">Current retirement income</h4>
+  <h4 class="card-header">Your retirement income</h4>
   <div class="card-body">
-    Test
+    <div class="row">
+        <div class="col-md-6">
+          <div style="display: block;">
+          <canvas baseChart width="400" height="400"
+                      [datasets]="lineChartData"
+                      [labels]="lineChartLabels"
+                      [options]="lineChartOptions"
+                      [colors]="lineChartColors"
+                      [legend]="lineChartLegend"
+                      [chartType]="lineChartType"
+                      (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-bottom: 10px">
+          <table class="table table-responsive table-condensed">
+            <tr>
+              <th *ngFor="let label of lineChartLabels">{{label}}</th>
+            </tr>
+            <tr *ngFor="let d of lineChartData">
+              <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
+            </tr>
+          </table>
+          <button (click)="randomize()">CLICK</button>
+        </div>
+      </div>
   </div>
 </div>
+<mat-card class="result">
+  <mat-card-content>
+    <h2 class="example-h2">Result</h2>
+
+    <mat-slider
+        class="example-margin"
+        [disabled]="disabled"
+        [invert]="invert"
+        [max]="max"
+        [min]="min"
+        [step]="step"
+        [thumb-label]="thumbLabel"
+        [tick-interval]="tickInterval"
+        [(ngModel)]="value"
+        [vertical]="vertical">
+    </mat-slider>
+  </mat-card-content>
+</mat-card>
+  
